@@ -1,10 +1,25 @@
 import { colorbrewer } from './colorbrewer.js'
 
-// import d3, { select, selectAll } from 'd3'
-
 const svg = d3.select('#container')
 
 d3.csv('worldcup.csv').then((data) => overallTeamViz(data))
+d3.text('./resources/infobox.html').then((html) => {
+  d3.select('body').append('div').attr('id', 'infobox').html(html)
+})
+d3.html('./resources/icon.svg').then((svgData) => {
+  // while (!d3.select(svgData).selectAll('path').empty()) {
+  //   d3.select('svg')
+  //     .node()
+  //     .appendChild(d3.select(svgData).select('path').node())
+  // }
+  // ----- OR -----
+  d3.select(svgData)
+    .selectAll('path')
+    .each(function () {
+      d3.select('svg').node().appendChild(this)
+    })
+  d3.selectAll('path').attr('transform', 'translate(50,50)')
+})
 
 function overallTeamViz(data) {
   svg
@@ -109,8 +124,16 @@ function overallTeamViz(data) {
       .attr('y', 30)
   }
 
+  function teamClick(event, dataPoint) {
+    d3.selectAll('td.data')
+      .data(Object.values(dataPoint))
+      .html((d) => d)
+  }
+
   teamG.select('text').style('pointer-events', 'none')
 
   teamG.on('mouseover', highlightRegion)
   teamG.on('mouseout', unhighlight)
+
+  teamG.on('click', teamClick)
 }
