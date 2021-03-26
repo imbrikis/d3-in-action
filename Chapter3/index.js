@@ -36,6 +36,14 @@ function overallTeamViz(data) {
     .attr('y', 30)
     .text((d) => d.team)
 
+  teamG
+    .insert('image', 'text')
+    .attr('xlink:href', (d) => `images/${d.team}.png`)
+    .attr('width', '45px')
+    .attr('height', '20px')
+    .attr('x', -22)
+    .attr('y', -10)
+
   const dataKeys = Object.keys(data[0]).filter(
     (d) => d !== 'team' && d !== 'region'
   )
