@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  min-height: 800px;
+}
+
+text {
+  font-size: 7px;
+  text-anchor: middle;
+  fill: #4f442b;
+}
+g > text.active {
+  font-size: 30px;
+}
+circle {
+  fill: #75739f;
+  stroke: black;
+  stroke-width: 1px;
+}
+circle.active {
+  fill: #fe9922;
+}
+circle.inactive {
+  fill: #c4b9ac;
+}
