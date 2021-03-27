@@ -13,12 +13,33 @@ d3.html('./resources/icon.svg').then((svgData) => {
   //     .appendChild(d3.select(svgData).select('path').node())
   // }
   // ----- OR -----
-  d3.select(svgData)
-    .selectAll('path')
-    .each(function () {
-      d3.select('svg').node().appendChild(this)
-    })
-  d3.selectAll('path').attr('transform', 'translate(50,50)')
+  // d3.select(svgData)
+  //   .selectAll('path')
+  //   .each(function () {
+  //     d3.select('svg').node().appendChild(this)
+  //   })
+  // d3.selectAll('path').attr('transform', 'translate(50,50)')
+  // ----- 3.24 -----
+  d3.selectAll('g').each(function () {
+    let gParent = this
+    d3.select(svgData)
+      .selectAll('path')
+      .each(function () {
+        gParent.appendChild(this.cloneNode(true))
+      })
+  })
+
+  // d3.selectAll('g.overallG').each(function (d) {
+  //   d3.select(this).selectAll('path').datum(d)
+  // })
+  // var fourColorScale = d3
+  //   .scaleOrdinal()
+  //   .domain(['UEFA', 'CONMEBOL', 'CAF', 'AFC'])
+  //   .range(['#5eafc6', '#FE9922', '#93C464', '#fcbc34'])
+  // d3.selectAll('path')
+  //   .style('fill', (p) => fourColorScale(p.region))
+  //   .style('stroke', 'black')
+  //   .style('stroke-width', '2px')
 })
 
 function overallTeamViz(data) {
@@ -51,13 +72,13 @@ function overallTeamViz(data) {
     .attr('y', 30)
     .text((d) => d.team)
 
-  teamG
-    .insert('image', 'text')
-    .attr('xlink:href', (d) => `images/${d.team}.png`)
-    .attr('width', '45px')
-    .attr('height', '20px')
-    .attr('x', -22)
-    .attr('y', -10)
+  // teamG
+  //   .insert('image', 'text')
+  //   .attr('xlink:href', (d) => `images/${d.team}.png`)
+  //   .attr('width', '45px')
+  //   .attr('height', '20px')
+  //   .attr('x', -22)
+  //   .attr('y', -10)
 
   const dataKeys = Object.keys(data[0]).filter(
     (d) => d !== 'team' && d !== 'region'
