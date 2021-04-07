@@ -1,4 +1,5 @@
 const svg = d3.select('#container')
+svg.style('width', '1000px')
 const width = 500
 const height = 500
 
@@ -11,6 +12,7 @@ const streamgraph = (data) => {
     .scaleOrdinal()
     .domain(['titanic', 'avatar', 'akira', 'frozen', 'deliverance', 'avengers'])
     .range(['#fcd88a', '#cf7c1c', '#93c464', '#75734F', '#5eafc6', '#41a368'])
+  const legendA = d3.legendColor().scale(fillScale)
   const xScale = d3.scaleLinear().domain([1, 10]).range([20, 470])
   const yScale = d3.scaleLinear().domain([0, 55]).range([480, 20])
 
@@ -24,6 +26,8 @@ const streamgraph = (data) => {
 
   svg.append('g').attr('id', 'xAxisG').call(xAxis)
   svg.append('g').attr('id', 'yAxisG').call(yAxis)
+
+  svg.append('g').attr('transform', 'translate(500, 0)').call(legendA)
 
   d3.selectAll('.tick > line').style('stroke', 'lightgray')
   d3.selectAll('.domain').style('stroke', 'lightgray')
