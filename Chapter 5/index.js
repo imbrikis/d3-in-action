@@ -12,8 +12,20 @@ const histogram = (tweetsData) => {
     .thresholds([0, 1, 2, 3, 4, 5])
     .value((d) => d.favorites.length)
 
-  const histoData = histoChart(tweetsData)
+  let histoData = histoChart(tweetsData)
   console.log(histoData)
+
+  const retweets = () => {
+    histoChart.value((d) => d.retweets.length)
+    histoData = histoChart(tweetsData)
+    d3.selectAll('rect')
+      .data(histoData)
+      .transition()
+      .duration(500)
+      .attr('x', (d) => xScale(d.x0))
+      .attr('y', (d) => yScale(d.length))
+      .attr('height', (d) => 400 - yScale(d.length))
+  }
 
   svg
     .selectAll('rect')
@@ -25,6 +37,7 @@ const histogram = (tweetsData) => {
     .attr('width', (d) => xScale(d.x1 - d.x0) - 2)
     .attr('height', (d) => 400 - yScale(d.length))
     .style('fill', '#FCD88B')
+    .on('click', retweets)
 
   svg
     .append('g')
